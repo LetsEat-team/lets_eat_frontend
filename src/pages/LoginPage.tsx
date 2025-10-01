@@ -1,10 +1,10 @@
 import { useState } from "react";
+import Button from "../components/Button";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [pw, setPw] = useState("");
   const [showPw, setShowPw] = useState(false);
-  const [loading, setLoading] = useState(false);
   const [msg, setMsg] = useState<string | null>(null);
 
   async function onSubmit(e: React.FormEvent) {
@@ -20,12 +20,6 @@ export default function LoginPage() {
       setMsg("비밀번호는 6자 이상이어야 합니다.");
       return;
     }
-
-    setLoading(true);
-    // TODO: 실제 API 연동 자리
-    await new Promise((r) => setTimeout(r, 800));
-    setLoading(false);
-    setMsg("🔐 (샘플) 로그인 시도 완료 — API 연동 지점");
   }
 
   return (
@@ -66,13 +60,8 @@ export default function LoginPage() {
           </div>
         </div>
 
-        <button
-          type="submit"
-          disabled={loading}
-          className="w-full btn bg-sky-600 text-white hover:bg-sky-700 disabled:opacity-60 rounded-xl px-4 py-2 font-medium shadow"
-        >
-          {loading ? "로그인 중..." : "로그인"}
-        </button>
+        <Button>회원가입</Button>
+
 
         {msg && (
           <p className="text-sm text-gray-600 bg-gray-50 border rounded-xl px-3 py-2">
