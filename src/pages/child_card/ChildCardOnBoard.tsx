@@ -1,17 +1,9 @@
-import { useEffect } from "react";
-import { useTheme } from "../../contexts/ThemeContext";
-
 type ChildCardOnBoardProps = {
   onFinish: () => void;  //onBoarding 끝났는지 여부
 };
 
 export default function ChildCardOnBoard({ onFinish }: ChildCardOnBoardProps) {
-    const { setTheme } = useTheme();
 
-  useEffect(() => {
-    setTheme({ bgTheme: "green" }); // 페이지 진입 시 green 배경
-    return () => setTheme({ bgTheme: "white" }); // 페이지 떠날 때 white로 복원
-  }, []);
   return (
     <div className="p-5 rounded-lg bg-[#F8F8F8E0] backdrop-blur-[27px] shadow-md">
       <h2>환영합니다!</h2>
