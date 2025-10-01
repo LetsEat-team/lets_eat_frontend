@@ -1,8 +1,15 @@
 import { Outlet } from "react-router-dom";
+import { useTheme } from "../contexts/ThemeContext";
 
 export default function App() {
+  const { theme } = useTheme();
+  const bgStyle =
+    theme.bgTheme === "green"
+      ? { background: "linear-gradient(to bottom, #04C97E, #ffffff)" } // maingreen -> white
+      : { background: "#ffffff" };
+
   return (
-    <div className="min-h-dvh bg-gray-50 text-gray-900">
+    <div style={{ minHeight: "100dvh", ...bgStyle }} className="text-gray-900">
       <header className="border-b bg-white">
         <div>임시 상단바</div>
       </header>
