@@ -2,7 +2,7 @@
 name: Feature request
 about: Suggest an idea for this project
 title: ''
-labels: ":white_check_mark:FEATURE"
+labels: ''
 assignees: ''
 
 ---
