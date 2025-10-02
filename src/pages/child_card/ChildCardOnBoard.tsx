@@ -1,12 +1,14 @@
+import { useNavigate } from "react-router-dom";
 import Button from "../../components/Button";
 import CharaTalk from "../../components/CharaTalk";
 
-type ChildCardOnBoardProps = {
-  onFinish: () => void;  //onBoarding 끝났는지 여부
-};
 
-export default function ChildCardOnBoard({ onFinish }: ChildCardOnBoardProps) {
+export default function ChildCardOnBoard() {
+  const navigate = useNavigate();
 
+  const goOnboard2 = () => {
+    navigate("/childcard/onboard2");
+  };
   return (
     <div className="flex flex-col justify-center items-center">
       <div className="w-[258px] h-[258px] mt-[71px] mb-[67px] rounded-full bg-gray-200"></div>
@@ -17,7 +19,7 @@ export default function ChildCardOnBoard({ onFinish }: ChildCardOnBoardProps) {
         <span className="text-maingreen">티켓</span>
         {`을 받아봐요~`}
       </CharaTalk>
-      <Button onClick={onFinish} className="mt-[20px]">둘러보기</Button>
+      <Button onClick={goOnboard2} className="mt-[20px]">카드 등록하기</Button>
     </div>
   );
 }
