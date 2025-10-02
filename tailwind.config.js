@@ -8,7 +8,10 @@ export default {
       textblack:"#222222",
       textgray:"#AEAEAE",
       buttonBlack:"#302E2D"
-  }
+  },
+        fontFamily: {
+        mplus1: ['"M PLUS 1"', 'sans-serif'],
+      },
     },
   },
   plugins: [],
