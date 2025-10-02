@@ -24,7 +24,7 @@ export default function App() {
       : { background: "#ffffff" };
 
   return (
-    <div style={bgStyle} className="min-h-dvh text-gray-900">
+    <div style={bgStyle} className="min-h-dvh text-gray-900 font-mplus1">
       <header className="border-b bg-white">
         <div>임시 상단바</div>
       </header>
