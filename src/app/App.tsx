@@ -21,7 +21,7 @@ export default function App() {
   const bgStyle =
     theme.bgTheme === "green"
       ? { background: "linear-gradient(to bottom, #04C97E, #ffffff)" } // maingreen → white
-      : { background: "#ffffff" };
+      : { background: "#F9F9F9" };
 
   return (
     <div style={bgStyle} className="min-h-dvh text-gray-900 font-mplus1">
