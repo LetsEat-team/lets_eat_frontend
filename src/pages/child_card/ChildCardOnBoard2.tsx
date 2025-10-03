@@ -1,6 +1,5 @@
 import Button from "../../components/Button";
 import cardExample from "../../assets/ChildCard/card-ex.png";
-import { useOnboarding } from "../../contexts/OnBoardingContext";
 import NumberCircle from "../../components/NumberCircle";
 import { useNavigate } from "react-router-dom";
 
@@ -10,7 +9,7 @@ const ChildCardOnBoard2 = () => {
     navigate("/childcard/scan"); // ChildCardScan 페이지 경로
   };
   return (
-    <div className="flex flex-col items-center justify-between min-h-screen bg-white">
+    <div className="flex flex-col items-center justify-between min-h-screen ">
 
       <div className="flex flex-col items-center  text-center mt-6 flex-1">
         <h2 className="text-base font-semibold mb-2">
@@ -41,7 +40,7 @@ const ChildCardOnBoard2 = () => {
             <span className="ml-2">빛이 반사되지 않도록 주의해주세요. 훼손이 심한 카드는 거절될 수도 있어요.</span>
           </li>
         </ul>
-        <Button onClick={handleNext} className="w-[335px] mt-10 bg-maingreen">
+        <Button onClick={handleNext} className="w-[335px] mt-10">
           다음 단계
         </Button>
       </div>

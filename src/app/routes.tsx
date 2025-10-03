@@ -4,6 +4,7 @@ import LoginPage from "../pages/LoginPage";
 import ChildCardWrapper from "../components/ChildCardWrapper";
 import ChildCardOnBoard2 from "../pages/child_card/ChildCardOnBoard2";
 import ChildCardScan from "../pages/child_card/ChildCardScan";
+import ChildCardUpload from "../pages/child_card/ChildCardUpload";
 
 export const router = createBrowserRouter([
   {
@@ -19,6 +20,7 @@ export const router = createBrowserRouter([
     { path: "/childcard", element:<ChildCardWrapper/>}, //아동급식카드
     { path: "/childcard/onboard2", element: <ChildCardOnBoard2 /> },
     { path: "/childcard/scan", element:<ChildCardScan />},
+    { path: "/childcard/upload", element:<ChildCardUpload />},
     ],
   },
 ]);
