@@ -1,7 +1,9 @@
 import { useState } from "react";
 import Button from "../components/Button";
+import { useNavigate } from "react-router-dom";
 
 export default function LoginPage() {
+   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [pw, setPw] = useState("");
   const [showPw, setShowPw] = useState(false);
@@ -73,6 +75,13 @@ export default function LoginPage() {
       <p className="mt-6 text-sm text-gray-600">
         계정이 없나요? <a className="text-sky-700 underline underline-offset-2" href="#">회원가입</a>
       </p>
+              <button
+          type="button"
+          onClick={() => navigate("/childcard")}
+          className="w-full rounded-xl bg-sky-600 text-white py-2 mt-3 hover:bg-sky-700"
+        >
+          아동급식카드로 이동
+        </button>
     </section>
   );
 }
