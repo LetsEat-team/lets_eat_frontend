@@ -7,7 +7,8 @@ export default {
       maingreen: "#04C97E", 
       textblack:"#222222",
       textgray:"#AEAEAE",
-      buttonBlack:"#302E2D"
+      textgray2:"#9D9896",
+      buttonBlack:"#302E2D",
   },
         fontFamily: {
         mplus1: ['"M PLUS 1"', 'sans-serif'],
