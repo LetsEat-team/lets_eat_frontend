@@ -8,6 +8,12 @@ const ChildCardScan = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
 
+  
+  // 카드 정보 상태
+  const [cardNum, setCardNum] = useState<string | null>(null);
+  const [cardExpiry, setCardExpiry] = useState<string | null>(null);
+  const [cardHolder, setCardHolder] = useState<string | null>(null);
+  const [cardCVC,setCardCVC] = useState<string | null>(null);
   useEffect(() => {
     const startCamera = async () => {
       try {
@@ -32,32 +38,65 @@ const ChildCardScan = () => {
   const guideWidth = 320;
   const guideHeight = 192;
 
-  const callGoogleVisionApi = async (imageBase64: string) => {
-    const apiKey = import.meta.env.REACT_APP_GOOGLE_VISION_API_KEY;
-    const apiUrl = `https://vision.googleapis.com/v1/images:annotate?key=${apiKey}`;
+async function callGoogleVisionAPI(imageBase64: string) {
+  const apiKey = import.meta.env.VITE_GOOGLE_VISION_API_KEY;
+  const url = `https://vision.googleapis.com/v1/images:annotate?key=${apiKey}`;
 
-    const body = {
-      requests: [
-        {
-          image: { content: imageBase64.replace(/^data:image\/(png|jpeg);base64,/, "") },
-          features: [{ type: "DOCUMENT_TEXT_DETECTION", maxResults: 1 }],
+  const body = {
+    requests: [
+      {
+        image: {
+          content: imageBase64.replace(/^data:image\/(png|jpeg);base64,/, ""),
         },
-      ],
-    };
-
-    const response = await fetch(apiUrl, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body),
-    });
-
-    if (!response.ok) {
-      throw new Error(`Google Vision API error: ${response.statusText}`);
-    }
-    return response.json();
+        features: [
+          { type: "DOCUMENT_TEXT_DETECTION", maxResults: 1 }
+        ],
+      },
+    ],
   };
 
-  const handleCapture = async () => {
+  const res = await fetch(url, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+
+  if (!res.ok) {
+    throw new Error(`Vision API 에러: ${res.statusText}`);
+  }
+
+  return res.json();
+}
+// 텍스트에서 카드 데이터 추출
+const extractCardData = (text: string) => {
+  const cardNumberRegex = /(\d{4}[\s-]?){3,4}\d{4}/;
+  const expiryRegex = /(0[1-9]|1[0-2])\/?([0-9]{2})/;
+  const nameRegex = /([A-Z]+\s?)+/;
+  const cvcRegex = /\b\d{3}\b/;
+
+  const cardNumMatch = text.match(cardNumberRegex);
+  const cardExpiryMatch = text.match(expiryRegex);
+  const cvcMatch = text.match(cvcRegex);
+
+  // 이름은 만료일 뒤쪽 텍스트에서 추출
+  let name: string | null = null;
+  if (cardExpiryMatch) {
+    const afterExpiryText = text.slice(text.indexOf(cardExpiryMatch[0]) + cardExpiryMatch[0].length);
+    const nameMatch = afterExpiryText.match(nameRegex);
+    if (nameMatch) name = nameMatch[0].trim();
+  }
+
+  return {
+    cardNum: cardNumMatch ? cardNumMatch[0].replace(/\s|-/g, "") : null,
+    cardExpiry: cardExpiryMatch ? cardExpiryMatch[0] : null,
+    cardHolder: name,
+    cardCVC: cvcMatch ? cvcMatch[0] : null,
+  };
+};
+
+
+
+const handleCapture = async () => {
     if (!videoRef.current || !canvasRef.current) return;
     setIsLoading(true);
 
@@ -78,9 +117,21 @@ const ChildCardScan = () => {
     const imageBase64 = canvas.toDataURL("image/png");
 
     try {
-      const result = await callGoogleVisionApi(imageBase64);
+      const result = await callGoogleVisionAPI(imageBase64);
       console.log("Vision API OCR 결과:", result);
-      // 카드번호, 만료일 등 필요한 데이터 파싱 후 상태 저장 및 화면 전환
+
+      // 실제 인식된 텍스트 얻기
+      const ocrText = result.responses?.[0]?.fullTextAnnotation?.text || "";
+      const { cardNum, cardExpiry, cardHolder, cardCVC } = extractCardData(ocrText);
+      setCardNum(cardNum);
+      setCardExpiry(cardExpiry);
+      setCardHolder(cardHolder);
+      setCardCVC(cardCVC);
+
+      console.log("추출된 카드번호:", cardNum);
+      console.log("추출된 만료일:", cardExpiry);
+      console.log("추출된 카드 소유자:", cardHolder);
+      console.log("추출된 카드 CVC:", cardCVC);
     } catch (error) {
       console.error("Vision API 호출 실패:", error);
     }
@@ -88,6 +139,7 @@ const ChildCardScan = () => {
     setIsLoading(false);
     navigate("/childcard/upload");
   };
+
 
   const handleDirectInput = () => {
     navigate("/childcard/upload");
