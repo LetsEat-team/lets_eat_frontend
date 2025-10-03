@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../../components/Button";
-import Tesseract from "tesseract.js";
 
 const ChildCardScan = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -15,32 +14,51 @@ const ChildCardScan = () => {
         const stream = await navigator.mediaDevices.getUserMedia({
           video: { facingMode: "environment" },
         });
-        if (videoRef.current) {
-          videoRef.current.srcObject = stream;
-        }
-      } catch (err) {
-        console.error("카메라 접근 실패:", err);
+        if (videoRef.current) videoRef.current.srcObject = stream;
+      } catch (e) {
+        console.error("카메라 접근 실패:", e);
       }
     };
+
     startCamera();
 
     return () => {
       if (videoRef.current?.srcObject) {
-        (videoRef.current.srcObject as MediaStream)
-          .getTracks()
-          .forEach((track) => track.stop());
+        (videoRef.current.srcObject as MediaStream).getTracks().forEach((track) => track.stop());
       }
     };
   }, []);
 
-  // 카드 가이드 영역 크기 (CSS 기준)
   const guideWidth = 320;
   const guideHeight = 192;
 
-  // 캡처 및 OCR 처리
+  const callGoogleVisionApi = async (imageBase64: string) => {
+    const apiKey = import.meta.env.REACT_APP_GOOGLE_VISION_API_KEY;
+    const apiUrl = `https://vision.googleapis.com/v1/images:annotate?key=${apiKey}`;
+
+    const body = {
+      requests: [
+        {
+          image: { content: imageBase64.replace(/^data:image\/(png|jpeg);base64,/, "") },
+          features: [{ type: "DOCUMENT_TEXT_DETECTION", maxResults: 1 }],
+        },
+      ],
+    };
+
+    const response = await fetch(apiUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Google Vision API error: ${response.statusText}`);
+    }
+    return response.json();
+  };
+
   const handleCapture = async () => {
     if (!videoRef.current || !canvasRef.current) return;
-
     setIsLoading(true);
 
     const video = videoRef.current;
@@ -48,49 +66,26 @@ const ChildCardScan = () => {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    // 비디오 크기 세팅
     const videoWidth = video.videoWidth;
     const videoHeight = video.videoHeight;
     canvas.width = guideWidth;
     canvas.height = guideHeight;
 
-    // 비디오 영상에서 가이드 위치 계산 (가운데)
     const sx = (videoWidth - guideWidth) / 2;
     const sy = (videoHeight - guideHeight) / 2;
 
-    // 비디오 영상에서 가이드 영역만 캔버스에 그리기 (크롭)
-    ctx.drawImage(
-      video,
-      sx,
-      sy,
-      guideWidth,
-      guideHeight,
-      0,
-      0,
-      guideWidth,
-      guideHeight
-    );
-
-    // 캔버스 데이터 URL 생성
-    const image = canvas.toDataURL("image/png");
+    ctx.drawImage(video, sx, sy, guideWidth, guideHeight, 0, 0, guideWidth, guideHeight);
+    const imageBase64 = canvas.toDataURL("image/png");
 
     try {
-      // Tesseract OCR 처리
-      const {
-        data: { text },
-      } = await Tesseract.recognize(image, "eng", {
-        logger: (m) => console.log(m),
-      });
-      console.log("OCR 결과:", text);
-
-      // OCR 결과를 필요하면 상태 저장 후 업로드 페이지에 전달 가능
-    } catch (err) {
-      console.error("OCR 처리 실패:", err);
+      const result = await callGoogleVisionApi(imageBase64);
+      console.log("Vision API OCR 결과:", result);
+      // 카드번호, 만료일 등 필요한 데이터 파싱 후 상태 저장 및 화면 전환
+    } catch (error) {
+      console.error("Vision API 호출 실패:", error);
     }
 
     setIsLoading(false);
-
-    // 임시로 업로드 페이지로 이동
     navigate("/childcard/upload");
   };
 
