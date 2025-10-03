@@ -13,7 +13,4 @@ const routeThemeMap: Record<string, "green" | "white"> = {
   ```
   </br>
 
-  </br>
-
-```
   
