@@ -15,8 +15,8 @@ export default function Button({
         "inline-flex items-center justify-center",
         "w-[335px] h-[43px] rounded-md",
         "bg-buttonBlack text-white",
-        "text-sm font-semibold",
-        "transition-colors hover:opacity-90",
+        "text-m font-semibold",
+        "transition-colors hover:opacity-95",
         "disabled:opacity-60 disabled:cursor-not-allowed",
         className,
       ].join(" ")}
