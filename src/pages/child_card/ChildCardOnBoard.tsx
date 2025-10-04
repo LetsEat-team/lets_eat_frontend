@@ -10,7 +10,7 @@ export default function ChildCardOnBoard() {
     navigate("/childcard/onboard2");
   };
   return (
-    <div className="flex flex-col justify-center items-center">
+    <div className="flex flex-col justify-center items-center mt-[50px]">
       <div className="w-[258px] h-[258px] mt-[71px] mb-[67px] rounded-full bg-gray-200"></div>
       <CharaTalk charName="캐릭터이름">{`아동급식카드를 등록하면 `} 
         <span className="text-maingreen">냠냠패스</span>

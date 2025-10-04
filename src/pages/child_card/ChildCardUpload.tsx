@@ -42,7 +42,7 @@ const ChildCardUpload = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen mt-[32px]">
       <div className="flex flex-col items-center justify-center overflow-y-auto">
         <h2 className="font-medium text-[16px] font-semibold mb-2">카드 확인</h2>
         <p className="text-sm text-textgray2 mb-4 text-center">
