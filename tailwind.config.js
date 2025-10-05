@@ -5,12 +5,17 @@ export default {
     extend: {
       colors: {
       maingreen: "#04C97E", 
-      textblack:"#222222",
+      textblack:"#222222", //figma text - black
+      textbold:"#262423", //figma text - bold
       textgray:"#AEAEAE",
       textgray2:"#9D9896",
       buttonBlack:"#302E2D",
+      buttonGray:"#F2F2F2",
+
+      bold:"#262423"
+
   },
-        fontFamily: {
+      fontFamily: {
         mplus1: ['"M PLUS 1"', 'sans-serif'],
       },
     },
