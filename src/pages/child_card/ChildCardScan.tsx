@@ -146,7 +146,7 @@ const handleCapture = async () => {
   };
 
   return (
-    <div className="-mx-4 -my-8 w-[390px] h-full flex flex-col items-center justify-between min-h-screen bg-black text-center text-white relative overflow-hidden">
+    <div className="w-[390px] h-full flex flex-col items-center justify-between min-h-screen bg-black text-center text-white relative overflow-hidden">
       <video
         ref={videoRef}
         autoPlay
