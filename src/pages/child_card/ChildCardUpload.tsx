@@ -3,6 +3,7 @@ import cameraEx from "../../assets/ChildCard/camera-ex.png"
 import Button from "../../components/Button";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
+import ToggleButton from "../../components/ToggleButton";
 
 const ChildCardUpload = () => {
 const location = useLocation();
@@ -18,7 +19,31 @@ const location = useLocation();
   const [securityCode, setSecurityCode] = useState(state?.cardCVC || "")
   const [cardType, setCardType] = useState("부여군 꿈자람카드");
   const [password, setPassword] = useState("•");
-
+  
+  const cardList = [
+    "강릉시 아동급식카드",
+    "강원특별자치도 꿈드림 카드",
+    "경기도 G-Dream 카드",
+    "경상남도 아동급식카드",
+    "경상북도 아동급식카드",
+    "광주광역시 아이꿈 카드",
+    "대구광역시 아동급식카드",
+    "대전광역시 아동급식카드",
+    "부산광역시 행복드림카드",
+    "서울특별시 꿈나무 카드",
+    "세종특별자치시 아동급식카드",
+    "울산광역시 아동급식카드",
+    "인천광역시 아동급식카드",
+    "전라남도 아동급식카드",
+    "전라북도 아동급식카드",
+    "제주특별자치도 아동급식카드",
+    "충청남도 아동급식카드",
+    "충청북도 아동급식카드",
+    "춘천시 아동급식카드",
+    "원주시 아동급식카드",
+    "속초시 아동급식카드",
+    "김해시 아동급식카드",
+  ];
   const formatCardNumber = (value: string) => {
     // 숫자만 남기기
     const digits = value.replace(/\D/g, "");
@@ -111,13 +136,22 @@ const location = useLocation();
 
           {/* 카드 선택 */}
           <div>
-            <label className="block text-sm text-textgray2 mb-1">카드 선택</label>
-            <input
-              value={cardType}
-              onChange={(e) => setCardType(e.target.value)}
-              className="w-full border rounded px-2 py-2 bg-transparent"
-            />
-          </div>
+              <label className="block text-sm text-textgray2 mb-2">카드 선택</label>
+              <button className="w-[287px] h-[43px] border border-gray-300 rounded-md flex items-center justify-between px-4 text-gray-400 text-base font-normal">
+                카드를 선택해주세요.
+                <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+
+              <ToggleButton
+                list={cardList}
+                onToggle={(value) => setCardType(value)}
+              />
+              <p className="text-xs text-gray-500 mt-1">
+                선택된 카드: <span className="font-semibold">{cardType}</span>
+              </p>
+            </div>
 
           {/* 비밀번호 */}
           <div>
