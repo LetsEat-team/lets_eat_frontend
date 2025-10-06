@@ -15,7 +15,6 @@ const ChildCardScan = () => {
   // 카드 정보 상태
   const [cardNum, setCardNum] = useState<string | null>(null);
   const [cardExpiry, setCardExpiry] = useState<string | null>(null);
-  const [cardHolder, setCardHolder] = useState<string | null>(null);
   const [cardCVC,setCardCVC] = useState<string | null>(null);
   useEffect(() => {
     const startCamera = async () => {
@@ -38,8 +37,8 @@ const ChildCardScan = () => {
     };
   }, []);
 
-  const guideWidth = 35;
-  const guideHeight = 184;
+  const guideWidth = 320;
+  const guideHeight = 192;
 
 
 const handleCapture = async () => {
@@ -57,7 +56,7 @@ const handleCapture = async () => {
     canvas.height = guideHeight;
 
     const sx = (videoWidth - guideWidth) / 2;
-    const sy = (videoHeight - guideHeight) / 2;
+    const sy = (videoHeight - guideHeight) / 2-50;
 
     ctx.drawImage(video, sx, sy, guideWidth, guideHeight, 0, 0, guideWidth, guideHeight);
     const imageBase64 = canvas.toDataURL("image/png");
@@ -65,13 +64,12 @@ const handleCapture = async () => {
     try {
       const result = await callGoogleVisionAPI(imageBase64);
       const ocrText = result.responses?.[0]?.fullTextAnnotation?.text || "";
-      const { cardNum, cardExpiry, cardHolder, cardCVC } = extractChildCardData(ocrText);
+      const { cardNum, cardExpiry, cardCVC } = extractChildCardData(ocrText);
       setCardNum(cardNum);
       setCardExpiry(cardExpiry);
-      setCardHolder(cardHolder);
       setCardCVC(cardCVC);
     // 상태 전달하며 이동
-    navigate("/childcard/upload", { state: { cardNum, cardExpiry, cardHolder, cardCVC } });
+    navigate("/childcard/upload", { state: { cardNum, cardExpiry, cardCVC } });
 
     } catch (error) {
       console.error("Vision API 호출 실패:", error);
