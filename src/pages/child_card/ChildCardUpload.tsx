@@ -2,11 +2,22 @@ import cardExample from "../../assets/ChildCard/card-ex2.png";
 import cameraEx from "../../assets/ChildCard/camera-ex.png"
 import Button from "../../components/Button";
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
 
 const ChildCardUpload = () => {
-    const [cardNum, setCardNum] = useState("");
-    const [expiry, setExpiry] = useState("");
-    const [securityCode, setSecurityCode] = useState("");
+const location = useLocation();
+  const state = location.state as {
+    cardNum?: string;
+    cardExpiry?: string;
+    cardCVC?: string;
+  } | null;
+
+  // 초기 상태에 location state가 있으면 채움
+  const [cardNum, setCardNum] = useState(state?.cardNum || "");
+  const [expiry, setExpiry] = useState(state?.cardExpiry || "");
+  const [securityCode, setSecurityCode] = useState(state?.cardCVC || "")
+  const [cardType, setCardType] = useState("부여군 꿈자람카드");
+  const [password, setPassword] = useState("•");
 
   const formatCardNumber = (value: string) => {
     // 숫자만 남기기
@@ -102,7 +113,8 @@ const ChildCardUpload = () => {
           <div>
             <label className="block text-sm text-textgray2 mb-1">카드 선택</label>
             <input
-              value="부여군 꿈자람카드"
+              value={cardType}
+              onChange={(e) => setCardType(e.target.value)}
               className="w-full border rounded px-2 py-2 bg-transparent"
             />
           </div>
@@ -113,7 +125,8 @@ const ChildCardUpload = () => {
             <div className="flex gap-2">
               <input
                 type="password"
-                value="•"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 className="w-10 border-b text-center text-[16px] text-black outline-none bg-transparent"
               />
               
