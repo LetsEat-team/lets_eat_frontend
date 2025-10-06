@@ -35,32 +35,37 @@ export default function App() {
 
   const isMenuPage = menuIconRoutes.includes(location.pathname);
 
+  // 헤더를 숨길 경로 목록 추가
+  const hideHeaderRoutes = [
+    "/childcard/scan",
+    // 필요에 따라 추가 경로 작성 가능
+  ];
+
+  const isHeaderHidden = hideHeaderRoutes.includes(location.pathname);
+
+
   return (
     <div style={bgStyle} className="min-h-dvh text-gray-900 font-mplus1">
-      <header className="border-b bg-white w-full h-[51px]">
+         {/* 헤더 조건부 렌더링 */}
+      {!isHeaderHidden && (
+        <header className="border-b bg-white w-full h-[51px]">
           <div className="flex items-center justify-between w-full h-full px-4 relative">
-
-          {/* 메뉴 아이콘 이외에 뒤로가기 아이콘 표시 */}
             {isMenuPage ? (
-            <img src={MenuIcon} alt="menu" className="w-6 h-6" />
-          ) : (
-            <img
-              src={BackIcon}
-              alt="back"
-              className="w-6 h-6 cursor-pointer"
-              onClick={() => navigate(-1)}
-            />
-          )}
-
-            {/* 로고 이미지 - 변경 필요 */}
-            <div className="absolute left-1/2 transform -translate-x-1/2">
-              <img 
-                src={TopbarLogo}
-                className="h-6"
+              <img src={MenuIcon} alt="menu" className="w-6 h-6" />
+            ) : (
+              <img
+                src={BackIcon}
+                alt="back"
+                className="w-6 h-6 cursor-pointer"
+                onClick={() => navigate(-1)}
               />
+            )}
+            <div className="absolute left-1/2 transform -translate-x-1/2">
+              <img src={TopbarLogo} className="h-6" />
             </div>
           </div>
         </header>
+      )}
 
       <main className="max-w-5xl mx-auto">
         <Outlet />
