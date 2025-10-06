@@ -1,6 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../../components/Button";
+import { useMinHeightRealScreen } from "../../hooks/useMinHeightRealScreen";
+import { callGoogleVisionAPI } from "../../hooks/GoogleVisionAPI";
+import { extractChildCardData } from "../../hooks/ExtractCardData";
 
 const ChildCardScan = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -35,65 +38,8 @@ const ChildCardScan = () => {
     };
   }, []);
 
-  const guideWidth = 320;
-  const guideHeight = 192;
-
-async function callGoogleVisionAPI(imageBase64: string) {
-  const apiKey = import.meta.env.VITE_GOOGLE_VISION_API_KEY;
-  const url = `https://vision.googleapis.com/v1/images:annotate?key=${apiKey}`;
-
-  const body = {
-    requests: [
-      {
-        image: {
-          content: imageBase64.replace(/^data:image\/(png|jpeg);base64,/, ""),
-        },
-        features: [
-          { type: "DOCUMENT_TEXT_DETECTION", maxResults: 1 }
-        ],
-      },
-    ],
-  };
-
-  const res = await fetch(url, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(body),
-  });
-
-  if (!res.ok) {
-    throw new Error(`Vision API 에러: ${res.statusText}`);
-  }
-
-  return res.json();
-}
-// 텍스트에서 카드 데이터 추출
-const extractCardData = (text: string) => {
-  const cardNumberRegex = /(\d{4}[\s-]?){3,4}\d{4}/;
-  const expiryRegex = /(0[1-9]|1[0-2])\/?([0-9]{2})/;
-  const nameRegex = /([A-Z]+\s?)+/;
-  const cvcRegex = /\b\d{3}\b/;
-
-  const cardNumMatch = text.match(cardNumberRegex);
-  const cardExpiryMatch = text.match(expiryRegex);
-  const cvcMatch = text.match(cvcRegex);
-
-  // 이름은 만료일 뒤쪽 텍스트에서 추출
-  let name: string | null = null;
-  if (cardExpiryMatch) {
-    const afterExpiryText = text.slice(text.indexOf(cardExpiryMatch[0]) + cardExpiryMatch[0].length);
-    const nameMatch = afterExpiryText.match(nameRegex);
-    if (nameMatch) name = nameMatch[0].trim();
-  }
-
-  return {
-    cardNum: cardNumMatch ? cardNumMatch[0].replace(/\s|-/g, "") : null,
-    cardExpiry: cardExpiryMatch ? cardExpiryMatch[0] : null,
-    cardHolder: name,
-    cardCVC: cvcMatch ? cvcMatch[0] : null,
-  };
-};
-
+  const guideWidth = 35;
+  const guideHeight = 184;
 
 
 const handleCapture = async () => {
@@ -118,35 +64,32 @@ const handleCapture = async () => {
 
     try {
       const result = await callGoogleVisionAPI(imageBase64);
-      console.log("Vision API OCR 결과:", result);
-
-      // 실제 인식된 텍스트 얻기
       const ocrText = result.responses?.[0]?.fullTextAnnotation?.text || "";
-      const { cardNum, cardExpiry, cardHolder, cardCVC } = extractCardData(ocrText);
+      const { cardNum, cardExpiry, cardHolder, cardCVC } = extractChildCardData(ocrText);
       setCardNum(cardNum);
       setCardExpiry(cardExpiry);
       setCardHolder(cardHolder);
       setCardCVC(cardCVC);
+    // 상태 전달하며 이동
+    navigate("/childcard/upload", { state: { cardNum, cardExpiry, cardHolder, cardCVC } });
 
-      console.log("추출된 카드번호:", cardNum);
-      console.log("추출된 만료일:", cardExpiry);
-      console.log("추출된 카드 소유자:", cardHolder);
-      console.log("추출된 카드 CVC:", cardCVC);
     } catch (error) {
       console.error("Vision API 호출 실패:", error);
     }
 
-    setIsLoading(false);
-    navigate("/childcard/upload");
+  setIsLoading(false);
   };
+
 
 
   const handleDirectInput = () => {
     navigate("/childcard/upload");
   };
 
+  useMinHeightRealScreen();
+
   return (
-    <div className="w-[390px] h-full flex flex-col items-center justify-between min-h-screen bg-black text-center text-white relative overflow-hidden">
+    <div className="w-[390px] h-full flex flex-col items-center justify-between min-h-real-screen bg-black text-center text-white relative overflow-hidden">
       <video
         ref={videoRef}
         autoPlay
@@ -158,14 +101,26 @@ const handleCapture = async () => {
 
       <div className="relative z-10 flex flex-col w-full h-full justify-between">
         <div className="mt-16 px-6 text-center">
-          <h1 className="text-[16px] font-semibold mb-2">카드 스캔</h1>
-          <p className="text-[12px] text-gray-200">
+          <h1 className="text-[16px] font-semibold mb-4 -mt-4">카드 스캔</h1>
+          <p className="text-[12px] text-gray-200 mb-[60px]">
             사각형에 카드를 맞춰주세요. <br />
             카드 정보를 자동으로 스캔합니다.
           </p>
         </div>
 
-        <div className="flex-1 flex items-center justify-center">
+        <div className="flex-1 flex items-center justify-center relative w-full h-full relative"
+          style={{ zIndex: -1 }}
+        >
+          {/* 상단 영역 */}
+          <div className="absolute -top-[220px] left-0 right-0" style={{ height: `calc(220px)`, backgroundColor: 'rgba(0,0,0,0.6)' }} />
+          {/* 하단 영역 */}
+          <div className="absolute -bottom-[800px] left-0 right-0" style={{ height: `calc(800px)`, backgroundColor: 'rgba(0,0,0,0.6)' }} />
+          {/* 왼쪽 영역 */}
+          <div className="absolute" style={{ top: `calc(50% - 96px)`, bottom: `calc(50% - 96px)`, left: 0, width: `calc(50% - 160px)`, backgroundColor: 'rgba(0,0,0,0.6)' }} />
+          {/* 오른쪽 영역 */}
+          <div className="absolute" style={{ top: `calc(50% - 96px)`, bottom: `calc(50% - 96px)`, right: 0, width: `calc(50% - 160px)`, backgroundColor: 'rgba(0,0,0,0.6)' }} />
+
+          {/* 가운데 사각형 (카드 스캔 가이드) */}
           <div className="relative w-80 h-48">
             <div className="absolute top-0 left-0 w-6 h-6 border-t-4 border-l-4 border-maingreen" />
             <div className="absolute top-0 right-0 w-6 h-6 border-t-4 border-r-4 border-maingreen" />
@@ -174,15 +129,16 @@ const handleCapture = async () => {
           </div>
         </div>
 
-        <div className="flex w-full px-6 gap-3 py-6">
+
+        <div className="fixed bottom-[30px] flex w-[390px] px-6 gap-3 py-6">
           <Button
-            className="flex-1 bg-maingreen text-white"
+            className="flex text-white"
             onClick={handleCapture}
             disabled={isLoading}
           >
             {isLoading ? "로딩 중..." : "카드 촬영"}
           </Button>
-          <Button className="flex-1 bg-white text-black" onClick={handleDirectInput}>
+          <Button style={{ color: 'black' }} className="flex bg-white text-black" onClick={handleDirectInput}>
             직접 입력
           </Button>
         </div>

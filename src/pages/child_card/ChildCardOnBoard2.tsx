@@ -11,7 +11,7 @@ const ChildCardOnBoard2 = () => {
   return (
     <div className="flex flex-col items-center justify-between min-h-screen ">
 
-      <div className="flex flex-col items-center  text-center mt-6 flex-1">
+      <div className="flex flex-col items-center  text-center mt-6 ">
         <h2 className="text-base font-semibold mb-2">
           카드 등록을 위해<br/>아동급식카드를 준비해주세요.
         </h2>
