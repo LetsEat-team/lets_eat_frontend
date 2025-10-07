@@ -29,7 +29,7 @@ export default function App() {
 
   const bgStyle =
     theme.bgTheme === "green"
-      ? { background: "linear-gradient(to bottom, #04C97E, #ffffff)" } // maingreen → white
+      ? {   background: "linear-gradient(to bottom, #C5EDE0 0%, #C5EDE0 22%, #ffffff 100%)"} // #C5EDE0 → white
       : { background: "#F9F9F9" };
   
 
