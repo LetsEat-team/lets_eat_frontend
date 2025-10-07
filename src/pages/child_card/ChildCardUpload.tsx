@@ -21,7 +21,6 @@ const ChildCardUpload = () => {
   const [expiry, setExpiry] = useState(state?.cardExpiry || "");
   const [securityCode, setSecurityCode] = useState(state?.cardCVC || "")
   const [cardType, setCardType] = useState("");
-  const [password, setPassword] = useState("");
   
   const cardList = [
     "강릉시 아동급식카드",
