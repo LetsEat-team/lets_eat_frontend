@@ -200,7 +200,7 @@ const ChildCardUpload = () => {
           <Divider style={{ marginBottom: "30px" }}/>
         </div>
               {/* 하단 버튼 */}
-        <Button className="w-full text-white">카드 등록</Button>
+        <Button className="w-full text-white" onClick={() => navigate("/childcard")}>카드 등록</Button>
       </div>
     </div>
   );
