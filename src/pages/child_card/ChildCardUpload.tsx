@@ -2,11 +2,14 @@ import cardExample from "../../assets/ChildCard/card-ex2.png";
 import cameraEx from "../../assets/ChildCard/camera-ex.png"
 import Button from "../../components/Button";
 import { useState } from "react";
-import { useLocation } from "react-router-dom";
-import ToggleButton from "../../components/ToggleButton";
+import { useLocation, useNavigate } from "react-router-dom";
+import ToggleButton from "../../components/ToggleList";
+import PasswordInput from "../../components/PasswordInput";
+import Divider from "../../components/Divider";
 
 const ChildCardUpload = () => {
-const location = useLocation();
+  const navigate = useNavigate();
+  const location = useLocation();
   const state = location.state as {
     cardNum?: string;
     cardExpiry?: string;
@@ -17,8 +20,8 @@ const location = useLocation();
   const [cardNum, setCardNum] = useState(state?.cardNum || "");
   const [expiry, setExpiry] = useState(state?.cardExpiry || "");
   const [securityCode, setSecurityCode] = useState(state?.cardCVC || "")
-  const [cardType, setCardType] = useState("부여군 꿈자람카드");
-  const [password, setPassword] = useState("•");
+  const [cardType, setCardType] = useState("");
+  const [password, setPassword] = useState("");
   
   const cardList = [
     "강릉시 아동급식카드",
@@ -44,6 +47,18 @@ const location = useLocation();
     "속초시 아동급식카드",
     "김해시 아동급식카드",
   ];
+
+  const [isCardListVisible, setIsCardListVisible] = useState(false);
+  const handleSelectCardType = (type: string | null) => {
+    if (type) setCardType(type);
+    setIsCardListVisible(false); // 카드 선택 시 닫음
+  };
+
+  const toggleCardList = () => {
+    setIsCardListVisible(!isCardListVisible);
+  };
+
+
   const formatCardNumber = (value: string) => {
     // 숫자만 남기기
     const digits = value.replace(/\D/g, "");
@@ -77,22 +92,30 @@ const location = useLocation();
     setSecurityCode(e.target.value);
   };
 
+  
   return (
-    <div className="flex flex-col min-h-screen mt-[32px]">
-      <div className="flex flex-col items-center justify-center overflow-y-auto">
-        <h2 className="font-medium text-[16px] font-semibold mb-2">카드 확인</h2>
-        <p className="text-sm text-textgray2 mb-4 text-center">
+    <div className="flex flex-col min-h-screen items-center mt-[32px] font-medium ">
+      <div className="w-[287px] flex flex-col ">
+        <h2 className="text-[16px] mb-2 text-center">카드 확인</h2>
+        <p className="text-[12px] text-textgray2 mb-4 text-center">
           카드가 정상적으로 촬영되었나요? <br />
           인식된 정보가 틀리면 이용에 제한되오니<br />
           반드시 확인 및 수정해주세요.
         </p>
 
         {/* 카드 이미지 */}
-        <div className="w-[243.14px] h-[145.73px] relative flex justify-center mb-8 mt-3">
-          <img src={cardExample} alt="카드 예시" className="w-72 rounded-lg shadow" />
-          <div className="absolute -bottom-4 -right-4 w-10 h-10 bg-white rounded-full shadow flex items-center justify-center">
-            <img src={cameraEx} alt="카메라" className="w-[24px] h-[24px]"/>
+        <div className="w-full relative flex justify-center items-center mb-8 mt-3">
+          <div className="absolute bottom-[30px] text-white flex-col text-[11px]">
+            <div>{cardNum || "0000 0000 0000 0000"}</div>
+            <div><span>{expiry || "00/00"}</span><span className="ml-[10px]">{securityCode || "000"}</span></div>
           </div>
+          <img src={cardExample} alt="카드 예시" className="w-[243.14px] h-[145.73px]" />
+            <button
+              onClick={() => navigate("/childcard/scan")}
+              className="absolute -bottom-4 right-2 w-10 h-10 bg-white rounded-full shadow flex items-center justify-center"
+            >
+              <img src={cameraEx} alt="카메라" className="w-[24px] h-[24px]"/>
+            </button>
         </div>
 
         {/* 입력 폼 */}
@@ -105,21 +128,22 @@ const location = useLocation();
                 value={cardNum}
                 onChange={handleChange}
                 maxLength={19} // 16자리 + 3개의 '-' 포함
-                className="w-full border-b text-left text-[16px] text-black outline-none bg-transparent"
+                className="w-full text-left text-[16px] text-black outline-none bg-transparent"
                 placeholder="0000-0000-0000-0000"
               />
           </div>
-
+          <Divider/>
           {/* 만료일 */}
           <div>
             <label className="block text-sm text-textgray2 mb-1">만료일</label>
             <input
               value={expiry}
               onChange={handleExpiryChange}
-              className="w-full border-b text-[16px] text-black outline-none bg-transparent"
+              className="w-full text-[16px] text-black outline-none bg-transparent"
               placeholder="00/00"
             />
           </div>
+          <Divider/>
 
           {/* 보안코드 */}
           <div>
@@ -129,49 +153,54 @@ const location = useLocation();
             <input
               value={securityCode}
               onChange={handleSecurityCodeChange}
-              className="w-full border-b text-[16px] text-black outline-none bg-transparent"
+              className="w-full text-[16px] text-black outline-none bg-transparent"
               placeholder="000"
             />
           </div>
+          <Divider />
 
           {/* 카드 선택 */}
           <div>
-              <label className="block text-sm text-textgray2 mb-2">카드 선택</label>
-              <button className="w-[287px] h-[43px] border border-gray-300 rounded-md flex items-center justify-between px-4 text-gray-400 text-base font-normal">
-                카드를 선택해주세요.
-                <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" >
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-                </svg>
-              </button>
+            <label className="block text-sm text-textgray2 mb-2">카드 선택</label>
+            
+            <button
+              className="w-full h-[43px] border border-gray-300 rounded-md flex items-center justify-between px-4 text-gray-400 text-[16px] font-medium"
+              onClick={toggleCardList}
+            >
+                <span className={cardType ? "text-black" : "text-gray-400"}>
+                  {cardType || "카드를 선택해주세요."}
+                </span>
+              <svg
+                className="w-5 h-5 text-gray-400 transform transition-transform duration-200"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                viewBox="0 0 24 24"
+                style={{ transform: isCardListVisible ? 'rotate(180deg)' : 'rotate(0deg)' }}
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
 
-              <ToggleButton
-                list={cardList}
-                onToggle={(value) => setCardType(value)}
-              />
-              <p className="text-xs text-gray-500 mt-1">
-                선택된 카드: <span className="font-semibold">{cardType}</span>
-              </p>
-            </div>
+            {isCardListVisible && (
+              <ToggleButton list={cardList} onToggle={handleSelectCardType} />
+            )}
+            
+          <Divider/>
+          </div>
 
           {/* 비밀번호 */}
           <div>
-            <label className="block text-sm text-textgray2 mb-1">비밀번호</label>
+            <label className="block text-sm text-textgray2 mb-4">비밀번호</label>
             <div className="flex gap-2">
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-10 border-b text-center text-[16px] text-black outline-none bg-transparent"
-              />
+              <PasswordInput/>
               
             </div>
           </div>
+          <Divider style={{ marginBottom: "30px" }}/>
         </div>
-      </div>
-
-      {/* 하단 버튼 */}
-      <div className="px-6 py-4">
-        <Button className="w-full bg-green-500 text-white">카드 등록</Button>
+              {/* 하단 버튼 */}
+        <Button className="w-full text-white">카드 등록</Button>
       </div>
     </div>
   );
