@@ -1,58 +1,137 @@
-import React from "react";
+import { useState } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination } from "swiper/modules";
+
+import cardExample from "../../assets/ChildCard/card-ex2.png";
+import Checkbox from "../../components/CheckBox";
+import TicketCard from "../../components/TicketCard";
+import "swiper/css";
+import "swiper/css/pagination";
 
 const ChildCard = () => {
+  const [cardNum, setCardNum] = useState("");
+  const [expiry, setExpiry] = useState("");
+  const [securityCode, setSecurityCode] = useState("");
+  const [amount, setAmount] = useState(210000);
+
+  const [checked1, setChecked1] = useState(false);
+  const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setChecked1(e.target.checked);
+  };
+
+  const tickets = [
+    {
+      storeName: "김가네 서울역점",
+      category: "분식",
+      menu: "라면",
+      price: "3,000원",
+      status: "사용 전",
+      date: "2025.09.11",
+    },
+    {
+      storeName: "박가네 강남점",
+      category: "한식",
+      menu: "비빔밥",
+      price: "8,000원",
+      status: "사용 전",
+      date: "2025.09.15",
+    },
+    {
+      storeName: "최가네 마포점",
+      category: "카페",
+      menu: "아메리카노",
+      price: "4,500원",
+      status: "사용 전",
+      date: "2025.09.20",
+    },
+    {
+      storeName: "원가네 이태원점",
+      category: "양식",
+      menu: "스테이크",
+      price: "20,000원",
+      status: "사용 전",
+      date: "2025.09.25",
+    },
+    {
+      storeName: "정가네 홍대점",
+      category: "분식",
+      menu: "떡볶이",
+      price: "3,500원",
+      status: "사용 전",
+      date: "2025.09.30",
+    },
+  ];
+
   return (
-    <div className="w-[390px] mx-auto min-h-screen bg-gray-50 flex flex-col items-center pb-10">
+    <div className="w-full mx-auto min-h-screen flex flex-col items-center pb-10 bg-[#E2E2E250]">
       {/* 카드 영역 */}
-      <div className="w-full h-40 bg-gradient-to-b from-green-300 to-green-500 rounded-b-3xl flex items-center justify-center shadow-inner">
-        <div className="w-[280px] h-[150px] bg-gradient-to-b from-emerald-400 to-emerald-600 rounded-xl shadow-lg flex flex-col justify-between p-4 text-white">
-          <div className="text-xs tracking-widest">5282 3456 7890 1289</div>
-          <div className="text-right text-xs">09/25</div>
+      <div className="w-full h-[235px] bg-gradient-to-b from-maingreen to-white flex items-center justify-center">
+        <div className="w-full relative flex justify-center items-center mb-8 mt-3">
+          <div className="absolute bottom-[30px] text-white flex-col text-[11px]">
+            <div>{cardNum || "0000 0000 0000 0000"}</div>
+            <div>
+              <span>{expiry || "00/00"}</span>
+              <span className="ml-[10px]">{securityCode || "000"}</span>
+            </div>
+          </div>
+          <img
+            src={cardExample}
+            alt="카드 예시"
+            className="w-[243.14px] h-[145.73px]"
+          />
         </div>
       </div>
 
       {/* 잔액 박스 */}
-      <div className="mt-6 border border-green-300 rounded-xl text-center py-5 px-4 w-[340px] bg-white shadow-sm">
-        <p className="text-gray-400 text-lg font-semibold mb-1">이번 달 잔액</p>
-        <p className="text-3xl font-bold text-gray-900 mb-2">210,000 원</p>
-        <p className="text-sm text-gray-400">“이만큼 맛있는 음식을 더 먹을 수 있어요!”</p>
+      <div className="mt-6 border bg-white border-maingreen rounded-md text-center py-5 px-4 w-[340px] shadow-sm">
+        <p className="text-[#9D9896] text-[24px] font-medium mb-1">
+          이번 달 잔액
+        </p>
+        <p className="text-[24px] font-semibold text-gray-900 mb-2">
+          {amount.toLocaleString()} 원
+        </p>
+        <p className="text-[12px] text-gray-400">
+          <span className="text-maingreen font-bold">“</span>이만큼 맛있는 음식을
+          더 먹을 수 있어요!
+          <span className="text-maingreen font-bold">”</span>
+        </p>
       </div>
 
       {/* 내 티켓 */}
       <div className="w-full px-6 mt-8">
         <div className="flex justify-between items-center mb-3">
-          <h2 className="text-lg font-bold text-gray-900">내 티켓</h2>
-          <label className="flex items-center gap-2 text-xs text-gray-500">
-            <input type="checkbox" defaultChecked className="accent-green-500" />
-            사용 전 티켓만 보기
-          </label>
+          <h2 className="text-[24px] font-semibold text-gray-900">내 티켓</h2>
+          <Checkbox id="chk1" label="사용 전 티켓만 보기" checked={checked1} handler={onChangeHandler} />
         </div>
 
-        {/* 티켓 카드 */}
-        <div className="bg-white rounded-2xl shadow-md p-5 relative border border-gray-100">
-          <div className="absolute -left-3 top-1/2 transform -translate-y-1/2 w-6 h-6 rounded-full bg-gray-50 border border-gray-200"></div>
-          <div className="absolute -right-3 top-1/2 transform -translate-y-1/2 w-6 h-6 rounded-full bg-gray-50 border border-gray-200"></div>
-
-          <p className="text-green-600 text-sm font-semibold mb-1">✅ 선한 영향력 가게</p>
-          <p className="text-lg font-bold text-gray-900 mb-3">김가네 서울역점 <span className="text-sm text-gray-400 font-normal">분식</span></p>
-
-          <div className="flex justify-between text-base font-semibold border-t border-gray-100 pt-3">
-            <p>메뉴 <span className="font-normal text-gray-600 ml-2">라면</span></p>
-            <p>가격 <span className="font-normal text-gray-900 ml-2">3,000원</span></p>
-          </div>
-
-          <div className="mt-4">
-            <div className="bg-gray-100 text-gray-400 text-center py-2 rounded-xl font-medium">사용 전</div>
-            <p className="text-center text-xs text-gray-400 mt-2">2025.09.11</p>
-          </div>
+        {/* Swiper */}
+        <div className="w-full mt-4">
+          <Swiper
+            modules={[Pagination]}
+            pagination={{ clickable: true }}
+            spaceBetween={20}
+            slidesPerView={1}  // 한 번에 한 슬라이드만 보이도록 설정
+            className="pb-10"
+            centeredSlides={true} 
+            grabCursor={true}     
+          >
+            {tickets.map((ticket, index) => (
+              <SwiperSlide key={index}>
+                <TicketCard {...ticket} />
+              </SwiperSlide>
+            ))}
+          </Swiper>
         </div>
+
 
         {/* 추가 버튼 */}
         <div className="flex flex-col items-center mt-6">
-          <button className="w-12 h-12 bg-gray-200 text-gray-600 rounded-full flex items-center justify-center text-2xl font-bold shadow-sm hover:bg-gray-300 transition">
+          <button className="w-12 h-12 text-gray-600 rounded-full flex items-center justify-center text-2xl font-bold shadow-sm hover:bg-gray-300 transition">
             +
           </button>
-          <p className="text-sm text-gray-500 mt-2">카드 사용 내역을 추가해보세요</p>
+          <p className="text-sm text-gray-500 mt-2">
+            카드 사용 내역을 추가해보세요
+          </p>
         </div>
       </div>
     </div>

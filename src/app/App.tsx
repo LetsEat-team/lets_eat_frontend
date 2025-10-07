@@ -7,7 +7,7 @@ import TopbarLogo from "../assets/TopBar/img_logo_sample.png"
 
 // 경로별 테마 매핑
 const routeThemeMap: Record<string, "green" | "white"> = {
-  "/childcard": "green",
+  "/childcard": "white",
   "/login/onboard2": "green",
   // 추가 경로는 계속 작성
 };
