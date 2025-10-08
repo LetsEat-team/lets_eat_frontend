@@ -30,7 +30,7 @@ export default function App() {
   const bgStyle =
     theme.bgTheme === "green"
       ? { background: "linear-gradient(to bottom, #04C97E, #ffffff)" } // maingreen → white
-      : { background: "#F9F9F9" };
+      : { background: "#E2E2E250" };
   
 
   const isMenuPage = menuIconRoutes.includes(location.pathname);

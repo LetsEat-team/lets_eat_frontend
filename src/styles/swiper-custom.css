@@ -1,0 +1,22 @@
+/* swiper-custom.css */
+.swiper-container {
+  overflow: visible !important;
+}
+.swiper-wrapper {
+  overflow: visible !important;
+}
+.swiper-initialized{
+  height: 400px;
+}
+
+.swiper-pagination {
+  bottom: 8px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+}
+.swiper-pagination-bullet{
+  background-color: black;
+}
+.swiper-pagination-bullet-active{
+   background-color: #04C97E;
+}

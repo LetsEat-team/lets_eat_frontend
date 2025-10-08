@@ -22,7 +22,7 @@ const TicketCard = ({
 }: TicketCardProps) => {
   // Tailwind 클래스 병합
   const mergedClassName = [
-    "w-[296.64px] h-[367.4px] p-5 relative flex flex-col justify-between bg-cover bg-center rounded-2xl ",
+    "w-[296.64px] h-[367.4px] relative flex flex-col justify-between bg-cover bg-center rounded-2xl py-[28px] px-[30px]",
     ...className,
   ].join(" ");
 
@@ -35,7 +35,7 @@ const TicketCard = ({
     >
       {/* 상단 가게 정보 */}
       <div>
-        <p className="text-maingreen text-sm font-semibold mb-1 flex items-center gap-1">
+        <p className="text-maingreen text-[12px] font-semibold mb-1 flex items-center gap-1 ml-[4px]">
           <img
             src={marker}
             alt="지도 마커"
@@ -43,29 +43,29 @@ const TicketCard = ({
           />
           선한 영향력 가게
         </p>
-        <p className="text-lg font-bold text-gray-900 mb-3">
+        <p className="text-[20px] font-bold text-gray-900 mb-3 mt-[8px]">
           {storeName}{" "}
-          <span className="text-sm text-gray-400 font-normal">{category}</span>
+          <span className="text-[10px] text-gray-400 font-regular">{category}</span>
         </p>
 
-        <div className="flex justify-between text-base font-semibold border-t border-gray-100 pt-3">
-          <p>
-            메뉴{" "}
-            <span className="font-normal text-gray-600 ml-2">{menu}</span>
-          </p>
-          <p>
-            가격{" "}
-            <span className="font-normal text-gray-900 ml-2">{price}</span>
-          </p>
+        <div className="flex justify-between text-base font-semibold pt-3  mt-[40px] ">
+          <div className="flex-col">
+            <div className="w-[108px] text-[16px] font-medium text-[#9D9896] text-center">메뉴</div>
+            <div className=" text-black text-[24px] font-semibold mt-[10px] text-center">{menu}</div>
+          </div>
+          <div>
+            <div className="w-[108px] text-[16px] font-medium text-[#9D9896] text-center">가격</div>
+            <div className="text-black text-[24px] font-semibold mt-[10px]  text-center">{price} 원</div>
+          </div>
         </div>
       </div>
 
       {/* 하단 상태 및 날짜 */}
-      <div className="mt-4">
-        <div className="text-gray-400 text-center py-2 rounded-xl font-medium bg-white/70 backdrop-blur-sm">
+      <div className="flex flex-col items-center justify-start mb-[10px]">
+        <button className="w-[159px] h-[43px] text-[#9D9896] bg-[#F2F2F2] text-center font-semibold">
           {status}
-        </div>
-        <p className="text-center text-xs text-gray-400 mt-2">{date}</p>
+        </button>
+        <p className="text-center text-[12px] text-black mt-2">{date}</p>
       </div>
     </div>
   );
