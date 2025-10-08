@@ -14,7 +14,7 @@ const ChildCard = () => {
   const [securityCode, setSecurityCode] = useState("");
   const [amount, setAmount] = useState(210000);
 
-  const [checked1, setChecked1] = useState(false);
+  const [checked1, setChecked1] = useState(false); //사용전 티켓인지 여부
   const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setChecked1(e.target.checked);
   };
