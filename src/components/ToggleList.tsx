@@ -1,4 +1,3 @@
-import { useState } from "react";
 
 interface ToggleButtonProps {
   list: string[];
@@ -6,7 +5,6 @@ interface ToggleButtonProps {
   className?: string;
 }
 const ToggleButton = ({ list, onToggle, className = "" }: ToggleButtonProps) => {
-  const [selected, setSelected] = useState<string | null>(null);
 
 
   return (

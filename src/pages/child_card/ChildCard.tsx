@@ -9,10 +9,10 @@ import "swiper/css";
 import "swiper/css/pagination";
 
 const ChildCard = () => {
-  const [cardNum, setCardNum] = useState("");
-  const [expiry, setExpiry] = useState("");
-  const [securityCode, setSecurityCode] = useState("");
-  const [amount, setAmount] = useState(210000);
+  const [cardNum, _setCardNum] = useState("");
+  const [expiry, _setExpiry] = useState("");
+  const [securityCode, _setSecurityCode] = useState("");
+  const [amount, _setAmount] = useState(210000);
 
   const [checked1, setChecked1] = useState(false); //사용전 티켓인지 여부
   const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
