@@ -13,9 +13,9 @@ const ChildCardScan = () => {
 
   
   // 카드 정보 상태
-  const [cardNum, setCardNum] = useState<string | null>(null);
-  const [cardExpiry, setCardExpiry] = useState<string | null>(null);
-  const [cardCVC,setCardCVC] = useState<string | null>(null);
+  const [_cardNum, setCardNum] = useState<string | null>(null);
+  const [_cardExpiry, setCardExpiry] = useState<string | null>(null);
+  const [_cardCVC,setCardCVC] = useState<string | null>(null);
   useEffect(() => {
     const startCamera = async () => {
       try {
@@ -106,7 +106,7 @@ const handleCapture = async () => {
           </p>
         </div>
 
-        <div className="flex-1 flex items-center justify-center relative w-full h-full relative"
+        <div className="flex-1 flex items-center justify-center relative w-full h-full"
           style={{ zIndex: -1 }}
         >
           {/* 상단 영역 */}
