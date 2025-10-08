@@ -7,7 +7,7 @@ import TopbarLogo from "../assets/TopBar/img_logo_sample.png"
 
 // 경로별 테마 매핑
 const routeThemeMap: Record<string, "green" | "white"> = {
-  "/childcard": "green",
+  "/childcard": "white",
   "/login/onboard2": "green",
   // 추가 경로는 계속 작성
 };
@@ -43,6 +43,15 @@ export default function App() {
 
   const isHeaderHidden = hideHeaderRoutes.includes(location.pathname);
 
+  // 헤더 텍스트 맵핑
+  const headerTitleMap: Record<string, string> = {
+    "/childcard": "아동 카드 등록",
+    "/childcard/scan": "카드 스캔",
+    "/childcard/upload": "카드 등록",
+    "/login/onboard2": "카드 등록",
+    "/login": "로그인",
+    // 필요에 따라 추가
+  };
 
   return (
     <div style={bgStyle} className="min-h-dvh text-gray-900 font-mplus1">
@@ -60,8 +69,8 @@ export default function App() {
                 onClick={() => navigate(-1)}
               />
             )}
-            <div className="absolute left-1/2 transform -translate-x-1/2">
-              <img src={TopbarLogo} className="h-6" />
+            <div className="absolute left-1/2 transform -translate-x-1/2 font-bold">
+             {headerTitleMap[location.pathname] || <img src={TopbarLogo} className="h-6" />}
             </div>
           </div>
         </header>
