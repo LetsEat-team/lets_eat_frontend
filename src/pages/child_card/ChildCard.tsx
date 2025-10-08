@@ -99,13 +99,14 @@ const ChildCard = () => {
 
       {/* 내 티켓 */}
       <div className="w-full px-6 mt-8">
-        <div className="flex justify-between items-center mb-3">
+        
           <h2 className="text-[24px] font-semibold text-gray-900">내 티켓</h2>
+        <div className="flex justify-end mb-3 mt-10">
           <Checkbox id="chk1" label="사용 전 티켓만 보기" checked={checked1} handler={onChangeHandler} />
         </div>
 
         {/* Swiper */}
-        <div className="w-full mt-4">
+        <div className="w-[296.64px] h-[367.4px] mt-4" style={{margin: '0 auto' }}>
           <Swiper
             modules={[Pagination]}
             pagination={{ clickable: true }}
