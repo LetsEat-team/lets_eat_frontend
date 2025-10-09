@@ -7,10 +7,9 @@ interface CheckboxProps {
   handler: (e: React.ChangeEvent<HTMLInputElement>) => void;
   className?: string[];
 }
-
 const CheckIcon = () => (
   <svg
-    className="w-3 h-3 text-white"
+    className="w-[10px] h-[10px] text-white"
     viewBox="0 0 24 24"
     fill="none"
     stroke="currentColor"
@@ -41,14 +40,14 @@ const Checkbox = ({
         type="checkbox"
         checked={checked}
         onChange={handler}
-        className="sr-only w-5 h-5 border border-gray-300 focus:outline-none"
+        className="sr-only"
       />
       <span
-        className={`w-5 h-5 flex items-center justify-center rounded-[2px] ${
+        className={`w-[14px] h-[14px] flex items-center justify-center rounded-[2px] ${
           checked ? "bg-black border-green-600" : "border-gray-300 border"
         }`}
       >
-        <CheckIcon />
+        {checked && <CheckIcon />}
       </span>
       <span className="text-sm text-black">{label}</span>
     </label>
