@@ -10,7 +10,7 @@ const routeThemeMap: Record<string, "green" | "white"> = {
   "/childcard": "white",
   "/login/onboard2": "green",
   "/childcard/onboard1" : "green",
-  // 추가 경로는 계속 작성
+  "/convy/onboard1": "green",
 };
 
 // 메뉴 아이콘이 표시될 페이지 경로
