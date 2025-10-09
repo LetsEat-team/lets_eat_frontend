@@ -1,17 +1,14 @@
 import { useState } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination } from "swiper/modules";
 import balloon from "../../assets/ChildCard/balloon.png";
 import cardExample from "../../assets/ChildCard/card-ex2.png";
 import Checkbox from "../../components/CheckBox";
-import TicketCard from "../../components/TicketCard";
 import "swiper/css";
 import "swiper/css/pagination";
 import TicketCardSwiper from "../../components/TicketCardSwiper";
 import Ticket from "../../assets/Card/Ticket.png";
 import Modal from "../../components/Modal";
 import Button from "../../components/Button";
-
+import AddCard from "../../assets/ChildCard/AddCard.png"
 
 const ChildCard = () => {
   const [cardNum, _setCardNum] = useState("");
@@ -78,22 +75,40 @@ const ChildCard = () => {
     <div className="w-full mx-auto min-h-screen flex flex-col items-center pb-10 bg-[#E2E2E250]">
       {/* 카드 영역 */}
       <div className="w-full h-[235px] bg-gradient-to-b from-maingreen to-white flex items-center justify-center">
-        <div className="w-full relative flex justify-center items-center mb-8 mt-3">
-          <div className="absolute bottom-[30px] text-white flex-col text-[11px]">
-            <div>{cardNum || "0000 0000 0000 0000"}</div>
-            <div>
-              <span>{expiry || "00/00"}</span>
-              <span className="ml-[10px]">{securityCode || "000"}</span>
-            </div>
+        {/* 카드 영역 */}
+        {cardNum === "" ? (
+          <div className="w-full relative flex justify-center items-center mb-8 mt-3">
+            <img
+              src={AddCard}
+              alt="Add Card"
+              className="w-[243.14px] h-[145.73px]"
+            />
           </div>
-          <img
-            src={cardExample}
-            alt="카드 예시"
-            className="w-[243.14px] h-[145.73px]"
-          />
-        </div>
-      </div>
+        ) : (
+          <div className="w-full relative flex justify-center items-center mb-8 mt-3">
+            <div className="absolute bottom-[30px] text-white flex-col text-[11px]">
+              <div>{cardNum || "0000 0000 0000 0000"}</div>
+              <div>
+                <span>{expiry || "00/00"}</span>
+                <span className="ml-[10px]">{securityCode || "000"}</span>
+              </div>
+            </div>
+            <img
+              src={cardExample}
+              alt="카드 예시"
+              className="w-[243.14px] h-[145.73px]"
+            />
+          </div>
+        )}
 
+      </div>
+{cardNum === "" ? (
+  <div className="w-full h-[400px] flex justify-center items-center">
+    <div>카드를 등록해주세요</div>
+  </div>
+
+) : (
+  <>
       {/* 잔액 박스 */}
       <div className="mt-6 border bg-white border-maingreen rounded-md text-center py-5 px-4 w-[340px] shadow-sm">
         <p className="text-[#9D9896] text-[24px] font-medium mb-1">
@@ -190,7 +205,8 @@ const ChildCard = () => {
           </div>
         </div>
       </Modal>
-
+      </>
+        )}
     </div>
   );
 };
