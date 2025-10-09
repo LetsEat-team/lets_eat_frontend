@@ -9,6 +9,7 @@ import TopbarLogo from "../assets/TopBar/img_logo_sample.png"
 const routeThemeMap: Record<string, "green" | "white"> = {
   "/childcard": "white",
   "/login/onboard2": "green",
+  "/childcard/onboard1" : "green",
   // 추가 경로는 계속 작성
 };
 
