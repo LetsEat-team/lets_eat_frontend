@@ -12,11 +12,17 @@ import LoginOnboardPage2 from "../pages/login/LoginOnboard2";
 import MainPage from "../pages/main/MainPage";
 
 // 아동급식카드 관련 페이지
-import ChildCardWrapper from "../components/ChildCardWrapper";
+import ChildCardWrapper from "../components/OnboardingWrapper/ChildCardWrapper";
 import ChildCardOnBoard2 from "../pages/child_card/ChildCardOnBoard2";
 import ChildCardScan from "../pages/child_card/ChildCardScan";
 import ChildCardUpload from "../pages/child_card/ChildCardUpload";
 import ChildCardOnBoard from "../pages/child_card/ChildCardOnBoard";
+import ConvyWrapper from "../components/OnboardingWrapper/ConvyWrapper";
+import ConvyOnBoard from "../pages/convy/ConvyOnBoard";
+import ConvyOnBoard2 from "../pages/convy/ConvyOnBoard2";
+import ConvyScan from "../pages/convy/ConvyScan";
+import ConvyUpload from "../pages/convy/ConvyUpload";
+import ConvyList from "../pages/convy/convyList";
 
 
 
@@ -39,6 +45,13 @@ export const router = createBrowserRouter([
     { path: "/childcard/onboard2", element: <ChildCardOnBoard2 /> },
     { path: "/childcard/scan", element:<ChildCardScan />},
     { path: "/childcard/upload", element:<ChildCardUpload />},
+
+    { path: "/convy", element:<ConvyWrapper/>}, //편의점 품목 인식
+    { path: "/convy/onboard1", element: <ConvyOnBoard/> },
+    { path: "/convy/onboard2", element: <ConvyOnBoard2 /> },
+    { path: "/convy/scan", element:<ConvyScan />},
+    { path: "/convy/upload", element:<ConvyUpload />},
+    { path: "/convy/list", element:<ConvyList />}
 
     ],
   },
