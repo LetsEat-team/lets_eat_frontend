@@ -24,10 +24,10 @@ export default function MainLoginPage() {
         <Button onClick={()=>navigate("/login")}>로그인</Button>
         <button
           type="button"
-          onClick={() => navigate("/childcard")}
+          onClick={() => navigate("/cony")}
           className="w-full rounded-xl bg-sky-600 text-white py-2 mt-3 hover:bg-sky-700"
         >
-          아동급식카드로 이동
+          편의점항목카드로 이동
         </button>
       </div>
     </div>

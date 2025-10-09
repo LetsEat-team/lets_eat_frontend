@@ -11,6 +11,7 @@ export default {
       textgray2:"#9D9896",
       buttonBlack:"#302E2D",
       buttonGray:"#F2F2F2",
+      bgWhite: "#E2E2E250",
 
       bold:"#262423"
 

@@ -9,6 +9,7 @@ import TopbarLogo from "../assets/TopBar/img_logo_sample.png"
 const routeThemeMap: Record<string, "green" | "white"> = {
   "/childcard": "white",
   "/login/onboard2": "green",
+  "/childcard/onboard1" : "green",
   // 추가 경로는 계속 작성
 };
 
@@ -29,8 +30,8 @@ export default function App() {
 
   const bgStyle =
     theme.bgTheme === "green"
-      ? {   background: "linear-gradient(to bottom, #C5EDE0 0%, #C5EDE0 22%, #ffffff 100%)"} // #C5EDE0 → white
-      : { background: "#F9F9F9" };
+      ? {  background: "linear-gradient(to bottom, #C5EDE0 22%, #ffffff 90%)" }
+      : { background: "#E2E2E250" };
   
 
   const isMenuPage = menuIconRoutes.includes(location.pathname);
@@ -54,7 +55,7 @@ export default function App() {
   };
 
   return (
-    <div style={bgStyle} className="min-h-dvh text-gray-900 font-mplus1">
+    <div style={bgStyle} className="min-h-screen text-gray-900 font-mplus1">
          {/* 헤더 조건부 렌더링 */}
       {!isHeaderHidden && (
         <header className="border-b bg-white w-full h-[51px]">
