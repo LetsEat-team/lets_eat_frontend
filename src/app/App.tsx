@@ -30,7 +30,7 @@ export default function App() {
 
   const bgStyle =
     theme.bgTheme === "green"
-      ? { background: "linear-gradient(to bottom, #04C97E, #ffffff)" } // maingreen → white
+      ? {  background: "linear-gradient(to bottom, #C5EDE0 22%, #ffffff 90%)" }
       : { background: "#E2E2E250" };
   
 
@@ -55,7 +55,7 @@ export default function App() {
   };
 
   return (
-    <div style={bgStyle} className="min-h-dvh text-gray-900 font-mplus1">
+    <div style={bgStyle} className="min-h-screen text-gray-900 font-mplus1">
          {/* 헤더 조건부 렌더링 */}
       {!isHeaderHidden && (
         <header className="border-b bg-white w-full h-[51px]">
