@@ -2,15 +2,20 @@ import Button from "../../components/Button";
 import cardExample from "../../assets/Convy/ConvyCam.png";
 import NumberCircle from "../../components/NumberCircle";
 import { useNavigate } from "react-router-dom";
+import ConvyListButton from "../../assets/Convy/ConvyList.png"
+import { useMinHeightRealScreenMinusHeader } from "../../hooks/useMinHeightRealScreen";
 
 const ConvyOnBoard2 = () => {
   const navigate = useNavigate();
   const handleNext = () => {
     navigate("/convy/scan"); 
   };
+  useMinHeightRealScreenMinusHeader();
   return (
-    <div className="flex flex-col items-center justify-between min-h-screen ">
-
+    <div className="flex flex-col items-center justify-between min-h-screen relative">
+      <button onClick={()=>navigate("/convy/list")} className="absolute top-[10px] right-[10px]">
+        <img src={ConvyListButton} alt="촬영한 사진" className="w-[24px] h-[24px]" />
+      </button>
       <div className="flex flex-col items-center  text-center mt-6 ">
         <h2 className="text-base font-semibold mb-2">
           편의점에서 <br/>구매 가능한 품목을 찍어보세요

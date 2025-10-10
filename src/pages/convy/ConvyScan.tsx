@@ -24,6 +24,7 @@ const ConvyCardScan = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [_itemNames, setItemNames] = useState<string[]>([]);
+  useMinHeightRealScreen();
 
   useEffect(() => {
     const startCamera = async () => {
