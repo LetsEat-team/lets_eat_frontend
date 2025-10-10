@@ -39,6 +39,7 @@ export default function App() {
   // 헤더를 숨길 경로 목록 추가
   const hideHeaderRoutes = [
     "/childcard/scan",
+    "/convy/scan"
     // 필요에 따라 추가 경로 작성 가능
   ];
 
