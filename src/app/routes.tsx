@@ -24,6 +24,10 @@ import ConvyScan from "../pages/convy/ConvyScan";
 import ConvyUpload from "../pages/convy/ConvyUpload";
 import ConvyList from "../pages/convy/convyList";
 
+import ShopListPage from "../pages/shop/ShopListPage";
+import ShopOnBoard from "../pages/shop/ShopOnboard1";
+import ShopOnBoard2 from "../pages/shop/ShopOnboard2";
+
 
 
 export const router = createBrowserRouter([
@@ -51,7 +55,11 @@ export const router = createBrowserRouter([
     { path: "/convy/onboard2", element: <ConvyOnBoard2 /> },
     { path: "/convy/scan", element:<ConvyScan />},
     { path: "/convy/upload", element:<ConvyUpload />},
-    { path: "/convy/list", element:<ConvyList />}
+    { path: "/convy/list", element:<ConvyList />},
+
+    { path: "/shop", element:<ShopListPage/>}, //shop
+    { path: "/shop/onboard1", element: <ShopOnBoard/> },
+    { path: "/shop/onboard2", element: <ShopOnBoard2 /> },
 
     ],
   },

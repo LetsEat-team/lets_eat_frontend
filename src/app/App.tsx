@@ -11,6 +11,8 @@ const routeThemeMap: Record<string, "green" | "white"> = {
   "/login/onboard2": "green",
   "/childcard/onboard1" : "green",
   "/convy/onboard1": "green",
+  "/shop/onboard1": "green",
+  "/shop/onboard2": "green",
 };
 
 // 메뉴 아이콘이 표시될 페이지 경로
