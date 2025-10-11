@@ -1,17 +1,17 @@
-// src/pages/ShopListPage.tsx
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import ShopInfoCard from "../../components/ShopCard"
+import ShopInfoCard from "../../components/ShopCard";
+import SearchBar from "../../components/SearchBar";
 
 type Shop = {
   id: string;
   image: string;
-  category: string; // 예: "선한 영향력 가게"
-  name: string;     // 예: "김가네 서울역점"
-  type: string;     // 예: "분식"
-  address: string;  // 예: "서울 중구 세종대로 28"
-  rating: number;   // 예: 4.0
-  reviews: number;  // 예: 4
+  category: string;
+  name: string;
+  type: string;
+  address: string;
+  rating: number;
+  reviews: number;
 };
 
 const MOCK_SHOPS: Shop[] = [
@@ -35,55 +35,75 @@ const MOCK_SHOPS: Shop[] = [
     rating: 4.5,
     reviews: 31,
   },
-  {
-    id: "3",
-    image: "/images/cafe.png",
-    category: "선한 영향력 가게",
-    name: "그린라이트 카페",
-    type: "카페",
-    address: "서울 중구 태평로1가 60",
-    rating: 3.8,
-    reviews: 12,
-  },
 ];
 
 export default function ShopListPage() {
   const navigate = useNavigate();
+  const [keyword, setKeyword] = useState("");
 
   const handleClick = (id: string) => {
-    navigate(`/shops/${id}`); // 필요시 라우트에 맞게 변경
+    navigate(`/shops/${id}`);
+  };
+
+  const handleSearch = () => {
+    console.log("검색 실행:", keyword);
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* 헤더 */}
-      <header className="sticky top-0 z-10 bg-white/80 backdrop-blur border-b">
-        <div className="max-w-3xl mx-auto px-4 py-4">
-          <h1 className="text-xl font-semibold text-gray-900">샵 리스트</h1>
-          <p className="text-sm text-gray-500">가까운 선한 영향력 가게를 찾아보세요</p>
-        </div>
-      </header>
+    <div className="min-h-screen flex flex-col items-center px-6">
+      <main className="flex flex-col items-center gap-6 py-4 w-full">
 
-      {/* 리스트 */}
-      <main className="max-w-3xl mx-auto px-4 py-6 space-y-4">
-        {MOCK_SHOPS.map((s) => (
-          <button
-            key={s.id}
-            onClick={() => handleClick(s.id)}
-            className="text-left w-full"
-          >
-            <ShopInfoCard
-              image={s.image}
-              category={s.category}
-              name={s.name}
-              type={s.type}
-              address={s.address}
-              rating={s.rating}
-              reviews={s.reviews}
+      <div className="flex flex-col items-center gap-3 w-full">
+        {/* 검색바 */}
+        <div className="flex justify-center w-full">
+          <div className="w-[392px]">
+            <SearchBar
+              value={keyword}
+              onChange={setKeyword}
+              onSearch={handleSearch}
+              placeholder="가게 이름을 입력하세요"
             />
-          </button>
-        ))}
-      </main>
+          </div>
+        </div>
+
+    {/* 필터 버튼 */}
+    <div className="flex justify-left px-6 gap-2 w-[392px]">
+      <button className="flex items-center gap-1 bg-white border border-gray-200 rounded-full px-3 py-1 text-sm text-gray-600 shadow-sm hover:shadow-md transition">
+        가격 설정 <span className="text-gray-400 text-xs">▼</span>
+      </button>
+
+      <button className="bg-[#3CB371] text-white rounded-full px-3 py-1 text-sm font-medium shadow-sm hover:shadow-md transition">
+        영업 중
+      </button>
+
+      <button className="flex items-center gap-1 bg-white border border-gray-200 rounded-full px-3 py-1 text-sm text-gray-600 shadow-sm hover:shadow-md transition">
+        유형 <span className="text-gray-400 text-xs">▼</span>
+      </button>
+    </div>
+  </div>
+
+  {/* 리스트 */}
+    <div className="flex flex-col gap-2">
+      {MOCK_SHOPS.map((s) => (
+        <button
+          key={s.id}
+          onClick={() => handleClick(s.id)}
+          className="w-[341px]"
+        >
+          <ShopInfoCard
+            image={s.image}
+            category={s.category}
+            name={s.name}
+            type={s.type}
+            address={s.address}
+            rating={s.rating}
+            reviews={s.reviews}
+          />
+        </button>
+      ))}
+    </div>
+  </main>
+
     </div>
   );
 }

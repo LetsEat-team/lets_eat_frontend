@@ -57,7 +57,7 @@ export const router = createBrowserRouter([
     { path: "/convy/upload", element:<ConvyUpload />},
     { path: "/convy/list", element:<ConvyList />},
 
-    { path: "/shop", element:<ShopListPage/>}, //shop
+    { path: "/shop/list", element:<ShopListPage/>}, //shop
     { path: "/shop/onboard1", element: <ShopOnBoard/> },
     { path: "/shop/onboard2", element: <ShopOnBoard2 /> },
 
