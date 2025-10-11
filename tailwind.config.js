@@ -9,12 +9,11 @@ export default {
       textbold:"#262423", //figma text - bold
       textgray:"#AEAEAE",
       textgray2:"#9D9896",
+      textgray3:"#5A5A5A",
       buttonBlack:"#302E2D",
       buttonGray:"#F2F2F2",
       bgWhite: "#E2E2E250",
-
-      bold:"#262423"
-
+      linegray:"#DEDEDE",
   },
       fontFamily: {
         mplus1: ['"M PLUS 1"', 'sans-serif'],
