@@ -5,7 +5,7 @@ import CloseSVG from "../assets/Common/img_close.svg";
 
 type LetterProps = {
   title: string;          // 타이틀
-  content: string;        // 본문
+  content: React.ReactNode;        // 본문
   onContinue: () => void; // "계속" 버튼
   onClose?: () => void;   // 닫기 버튼
   className?: string;
