@@ -61,7 +61,7 @@ export default function ShopListPage() {
               value={keyword}
               onChange={setKeyword}
               onSearch={handleSearch}
-              placeholder="가게 이름을 입력하세요"
+              placeholder="먹고 싶은 음식을 검색해보세요"
             />
           </div>
         </div>

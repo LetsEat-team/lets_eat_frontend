@@ -27,6 +27,7 @@ import ConvyList from "../pages/convy/convyList";
 import ShopListPage from "../pages/shop/ShopListPage";
 import ShopOnBoard from "../pages/shop/ShopOnboard1";
 import ShopOnBoard2 from "../pages/shop/ShopOnboard2";
+import ShopMapPage from "../pages/shop/ShopMapPage";
 
 
 
@@ -60,6 +61,7 @@ export const router = createBrowserRouter([
     { path: "/shop/list", element:<ShopListPage/>}, //shop
     { path: "/shop/onboard1", element: <ShopOnBoard/> },
     { path: "/shop/onboard2", element: <ShopOnBoard2 /> },
+    { path: "/shop/map", element:<ShopMapPage/>},
 
     ],
   },
