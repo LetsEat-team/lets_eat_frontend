@@ -5,12 +5,15 @@ import { RouterProvider } from "react-router-dom";
 import { router } from "./app/routes";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { OnboardingProvider } from "./contexts/OnBoardingContext";
+import { UserProvider } from "./contexts/UserContext";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <OnboardingProvider>
     <ThemeProvider>
-      <RouterProvider router={router} />
+      <UserProvider>
+        <RouterProvider router={router} />
+      </UserProvider>
     </ThemeProvider>
     </OnboardingProvider>
   </React.StrictMode>
